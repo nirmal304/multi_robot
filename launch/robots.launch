@@ -1,0 +1,40 @@
+<launch>
+  <!-- No namespace here as we will share this description. 
+       Access with slash at the beginning 
+  <param name="robot_description"
+    command="$(find xacro)/xacro.py $(find husky_description)/urdf/husky.urdf.xacro" /> -->
+ Load robot description 
+  <include file="$(find husky_description)/launch/description.launch" > 
+    <!-- <arg name="laser_enabled" default="$(arg laser_enabled)"/>
+    <arg name="kinect_enabled" default="$(arg kinect_enabled)"/>
+    <arg name="urdf_extras" default="$(arg urdf_extras)"/> -->
+  </include>
+
+<!--/home/asus/catkin_ws/src/husky/husky_description/urdf-->
+  <!-- BEGIN ROBOT 1-->
+  <group ns="robot1">
+      <arg name="initX" value="4" />
+      <arg name="initY" value="1" />
+      <arg name="initYaw" value="0" />
+      <param name="tf_prefix" value="robot1_tf" />
+      <include file="$(find multi_robot)/launch/one_robot.launch" >
+      <arg name="robot_name"  value="robot1" />
+    </include>
+  </group>
+
+  <!-- BEGIN ROBOT 2-->
+  <group ns="robot2">
+      <arg name="initX" value="-4" />
+      <arg name="initY" value="1" />
+      <arg name="initYaw" value="0" />
+      <param name="tf_prefix" value="robot2_tf" />
+      <include file="$(find multi_robot)/launch/one_robot.launch" >
+      <arg name="robot_name"  value="robot2" />
+    </include>
+  </group>
+
+<!-- Run the RVIZ 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find multi_robot)/rviz/multi_robot.rviz"/> -->
+
+</launch>
